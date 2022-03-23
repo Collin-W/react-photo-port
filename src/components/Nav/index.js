@@ -1,56 +1,63 @@
-import React from "react";
+import React, { useEffect } from 'react';
+import { capitalizeFirstLetter } from "../../utils/helpers";
 
-function Nav() {
+function Nav(props) {
 
-    const categories = [
-        {
-          name: "commercial",
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        },
-        { name: "portraits", description: "consectetur adipiscing elit, sed do" },
-        { name: "food", description: "ipsum dolor sit amet" },
-        {
-          name: "landscape",
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        },
-      ];
+    // when currentCategory changes the component will re-render
+    useEffect(() => {
+        document.title = capitalizeFirstLetter(currentCategory.name);
+    }, [currentCategory]);
 
-      function categorySelected(name) {
-          console.log(`${name} clicked`)
-      }
-    
-    return(
-        <header>
-            <h2>
-                <a href="/">
-                    <span role='img' aria-label="camera">📸</span> Title
-                </a>
+    const {
+        categories = [],
+        setCurrentCategory,
+        currentCategory,
+    } = props;
+  
 
-            </h2>
-            <nav>
-                <ul className="flex-row">
-                    <li className="mx-2">
-                        <a href="#about">
-                            About Owner
-                        </a>
-                    </li>
-                    <li>
-                    <span>Contact</span>
-                    </li>
-                    {categories.map((category) => 
-                    <li
-                    className="mx-1"
-                    key={category.name}>
-                        <span onClick={() => categorySelected(category.name)} > 
-                            {category.name}
-                        </span>
-                        </li>
-                    )}
-                </ul>
-            </nav>
-        </header>
-    )
+  
+  function categorySelected(name) {
+    console.log(`${name} clicked`);
+  }
+
+  return (
+    <header>
+      <h2>
+        <a href="/">
+          <span role="img" aria-label="camera">
+            📸
+          </span>{" "}
+          Title
+        </a>
+      </h2>
+      <nav>
+        <ul className="flex-row">
+          <li className="mx-2">
+            <a href="#about">About Owner</a>
+          </li>
+          <li>
+            <span>Contact</span>
+          </li>
+          {categories.map((category) => (
+            <li
+              className={`mx-1 ${
+                currentCategory.name === category.name && "navActive"
+              }`}
+              key={category.name}
+            >
+              <span
+                onClick={() => {
+                  setCurrentCategory(category);
+                }}
+              >
+                {capitalizeFirstLetter(category.name)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </header>
+  );
 }
 
 export default Nav;
