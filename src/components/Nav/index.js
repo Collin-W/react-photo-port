@@ -69,6 +69,8 @@ function Nav(props) {
     categories = [],
     setCurrentCategory,
     currentCategory,
+    contactSelected,
+    setContactSelected
   } = props;
 
 
@@ -87,12 +89,12 @@ function Nav(props) {
       <nav>
         <ul className="flex-row">
           <li className="mx-2">
-            <a data-testid="about" href="#about">
+            <a data-testid="about" onClick={() => setContactSelected(false)}  href="#about">
               About me
             </a>
           </li>
           <li className={"mx-2"}>
-            <span onClick={() => handleClick('Contact')}>
+            <span onClick={() => setContactSelected(true)} > 
               Contact
             </span>
           </li>
